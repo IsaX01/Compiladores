@@ -1,0 +1,71 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */options{  static = true;}PARSER_BEGIN(Gramatica)package paquete;
+
+public class Gramatica{  public static void main(String args []) throws ParseException  {    Gramatica parser = new Gramatica(System.in);    while (true)    {      System.out.println("Reading from standard input...");      System.out.print("Enter an expression like \"1+(2+3)*4;\" :");          }  }}PARSER_END(Gramatica)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN: // Definición de los tokens
+{
+    <ID: ["a"-"z","A"-"Z"] > 
+  | <NUM: ["0"-"9"] > 
+  | <PLUS: "+">
+  | <MINUS: "-">
+  | <MULT: "*">
+  | <DIV: "/">
+  | <LPAREN: "(">
+  | <RPAREN: ")">
+  | <CORI: "[">
+  | <CORD: "]">
+  | <PCOMA: ";">
+  | <Key: "{" >
+  | <Keys: "}" >
+}
+
+// Definición de la gramática
+void Start():
+{}
+{
+  DeclarationList()
+}
+
+void DeclarationList():
+{}
+{
+  ( Declaration() )*
+}
+
+void Declaration():
+{}
+{
+  Type() Identifier() ";"
+}
+
+void Type():
+{}
+{
+  "int"
+}
+
+void Identifier():
+{}
+{
+  <ID>
+}
+
+void Expression():
+{}
+{
+  Term() ( <PLUS> Term() | <MINUS> Term() )*
+}
+
+void Term():
+{}
+{
+  Factor() ( <MULT> Factor() | <DIV> Factor() )*
+}
+
+void Factor():
+{}
+{
+  <LPAREN> Expression() <RPAREN>
+  | <NUM>
+  | Identifier()
+}
